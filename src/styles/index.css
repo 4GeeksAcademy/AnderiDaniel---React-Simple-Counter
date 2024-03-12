@@ -17,6 +17,11 @@
     font-size: 100px;
 }
 
+.valueAndButtons{
+    text-align: center;
+    margin-top: 30px;
+}
+
 .buttons {
     display: flex;
     justify-content: center;
