@@ -1,36 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/index.css';
 
-const SecondsCounter = () => {
-
-  const [counter, setCounter] = useState(0);
+const SecondsCounter = ({ seconds }) => {
+  const [counter, setCounter] = useState(seconds);
+  const [digits, setDigits] = useState(["0", "0", "0", "0", "0", "0"]);
+  const [running, setRunning] = useState(true);
 
   useEffect(() => {
-    const number = setInterval(() => {
-      setCounter((prev) => (prev == 999999 ? 0 : prev + 1));
-    }, 1000);
-    return () => clearInterval(number);
-  }, []);
+    let interval;
+    if (running) {
+      interval = setInterval(() => {
+        setCounter((prevSecond) => (prevSecond === 999999 ? 0 : prevSecond + 1));
+      }, 1000);
+    }
 
-  const digit6 = Math.floor(counter / 100000); 
-  const digit5 = Math.floor((counter % 100000) / 10000); 
-  const digit4 = Math.floor((counter % 10000) / 1000); 
-  const digit3 = Math.floor((counter % 1000) / 100); 
-  const digit2 = Math.floor((counter % 100) / 10); 
-  const digit1 = counter % 10; 
+    return () => clearInterval(interval);
+  }, [running]);
+
+  useEffect(() => {
+    let newDigit = counter.toString().padStart(6, "0").split("");
+    setDigits(newDigit);
+  }, [counter]);
+
+  const handleStart = () => {
+    setRunning(true);
+  };
+
+  const handleStop = () => {
+    setRunning(false);
+  };
+
+  const handleReset = () => {
+    setCounter(seconds);
+  };
+
 
   return (
-    <div className="mainCounter">
-      <div><i className="fa-solid fa-clock"></i></div>
-      <div className="digit">{digit6}</div>
-      <div className="digit">{digit5}</div>
-      <div className="digit">{digit4}</div>
-      <div className="digit">{digit3}</div>
-      <div className="digit">{digit2}</div>
-      <div className="digit">{digit1}</div>
+    <div>
+      <div className="mainCounter">
+        <div><i className="fa-solid fa-clock"></i></div>
+        <div className="digit">{digits[0]}</div>
+        <div className="digit">{digits[1]}</div>
+        <div className="digit">{digits[2]}</div>
+        <div className="digit">{digits[3]}</div>
+        <div className="digit">{digits[4]}</div>
+        <div className="digit">{digits[5]}</div>
+      </div>
+      <div className="buttons">
+        <button onClick={handleStop} className="button btn btn-danger">Stop</button>
+        <button onClick={handleStart} className="button btn btn-success">Start</button>
+        <button onClick={handleReset} className="button btn btn-warning">Reset</button>
+      </div>
     </div>
+
   );
 };
 
 export default SecondsCounter;
+
 
