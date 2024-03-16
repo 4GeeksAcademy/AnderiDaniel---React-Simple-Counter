@@ -1,14 +1,4 @@
-/* 
 
-    You can write your own styles here...
-    
-    
-    ...Or you can use the import command to include 
-    other sylesheets into your bunde as well, e.j:
-    
-    import 'relative/path/to/stylesheet.scss';
-
-*/
 .mainCounter {
     display: flex;
     justify-content: space-around;
@@ -32,4 +22,12 @@
 .button {
     margin-left: 6px;
     border-radius: 10px;
+}
+
+.clock {
+    margin-bottom: 20px;
+}
+
+h4 {
+    margin-top: 15px;
 }

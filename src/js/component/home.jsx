@@ -8,7 +8,7 @@ import SecondsCounter from './SecondsCounter';
 const Home = () => {
 	return (
 		<div >
-			<SecondsCounter seconds={0}/>
+			<SecondsCounter seconds={-1}/>
 		</div>
 	);
 };

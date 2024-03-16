@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Buttons from './Buttons';
 import '../../styles/index.css';
+import { FaClock } from "react-icons/fa";
+
 
 const SecondsCounter = () => {
   const [counter, setCounter] = useState(0);
   const [digits, setDigits] = useState(["0", "0", "0", "0", "0", "0"]);
   const [running, setRunning] = useState(true);
   const [countdown, setCountdown] = useState(false);
-  const [initialValue, setInitialValue] = useState('');
-  const [alertValue, setAlertValue] = useState('');
+  const [initialValue, setInitialValue] = useState("");
+  const [alertValue, setAlertValue] = useState("");
 
   useEffect(() => {
     let interval;
@@ -21,11 +23,11 @@ const SecondsCounter = () => {
         }
       }, 1000);
 
-      if (counter === Number(alertValue)) {
+      if (alertValue && counter === Number(alertValue)) {
         alert(`Your time of ${alertValue} seconds was reached!`);
+        console.log(alertValue)
       }
     }
-
     return () => clearInterval(interval);
   }, [running, counter, countdown, alertValue]);
 
@@ -48,13 +50,13 @@ const SecondsCounter = () => {
   };
 
   const handleCountdown = () => {
-    setCounter(Number(initialValue));
+    setCounter(Number(initialValue || counter));
     setRunning(true);
     setCountdown(true);
   };
 
   const handleCountup = () => {
-    setCounter(Number(initialValue));
+    setCounter(Number(initialValue || counter));
     setRunning(true);
     setCountdown(false);
   };
@@ -70,7 +72,7 @@ const SecondsCounter = () => {
   return (
     <div>
       <div className="mainCounter">
-        <div><i className="fa-solid fa-clock"></i></div>
+        <div className="clock"><FaClock /></div>
         <div className="digit">{digits[0]}</div>
         <div className="digit">{digits[1]}</div>
         <div className="digit">{digits[2]}</div>
@@ -78,23 +80,27 @@ const SecondsCounter = () => {
         <div className="digit">{digits[4]}</div>
         <div className="digit">{digits[5]}</div>
       </div>
+
+      <Buttons onStart={handleStart} onStop={handleStop} onReset={handleReset} onCountdown={handleCountdown} onCountup={handleCountup} />
+
+
       <div className="valueAndButtons">
-        <h4>Type initial value please</h4>
+        <h4>Type initial value for "Count Down" or "Count Up" please</h4>
         <input
           type="text"
           value={initialValue}
           onChange={handleInputChange}
           placeholder="Initial value"
         />
+
         <h4>Type Alert value please</h4>
         <input
+          className="alertInput"
           type="text"
           value={alertValue}
           onChange={handleAlertInputChange}
           placeholder="Alert value"
         />
-        <Buttons onStart={handleStart} onStop={handleStop} onReset={handleReset} onCountdown={handleCountdown} onCountup={handleCountup} />
-
       </div>
     </div>
   );
