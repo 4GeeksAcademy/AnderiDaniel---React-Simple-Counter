@@ -25,7 +25,6 @@ const SecondsCounter = () => {
 
       if (alertValue && counter === Number(alertValue)) {
         alert(`Your time of ${alertValue} seconds was reached!`);
-        console.log(alertValue)
       }
     }
     return () => clearInterval(interval);
